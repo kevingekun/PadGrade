@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">PadGrade</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">用户名</string>
+    <string name="prompt_password">密码</string>
+    <string name="action_sign_in">登陆</string>
+
+    <string name="zkz">准考证号</string>
+    <string name="xm">姓名</string>
+    <string name="sfz">身份证号</string>
+
+    <string name="checkCategory">请选择参与考评模块：</string>
+    <string name="confirm">确定</string>
+</resources>
