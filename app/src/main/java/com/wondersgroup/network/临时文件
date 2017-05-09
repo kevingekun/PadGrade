@@ -1,0 +1,6 @@
+//前台接收图片
+public void onSuccess(byte[] result) {
+                InputStream sbs = new ByteArrayInputStream(result);
+                Bitmap bitmap = BitmapFactory.decodeStream(sbs);
+                ivsuijima.setImageBitmap(bitmap);
+            }
