@@ -1,4 +1,4 @@
-package com.wondersgroup.padgrade;
+package com.wondersgroup.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import com.wondersgroup.padgrade.R;
 
 import java.util.HashMap;
 import java.util.List;

@@ -59,9 +59,10 @@ public class LoginActivity extends AppCompatActivity {
 
     @Event(value = R.id.login, type = View.OnClickListener.class)
     private void loginButtonOnClick(View v) {
-        Intent intent = new Intent(LoginActivity.this,CategoryCheckActivity.class);
+       // Intent intent = new Intent(LoginActivity.this,CategoryCheckActivity.class);
+        Intent intent = new Intent(LoginActivity.this,BatchCheckActivity.class);
         startActivity(intent);
-        String url = "http://172.16.6.99:8080/ExamManagementServer/MobilePayServerAction/test.action";
+      /*  String url = "http://172.16.6.99:8080/ExamManagementServer/MobilePayServerAction/test.action";
         RequestParams params = new RequestParams(url);
         params.addQueryStringParameter("username", "abc");
         params.addQueryStringParameter("password", "123");
@@ -74,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this,test.getMessage(),Toast.LENGTH_SHORT).show();
 
             }
-        });
+        });*/
     }
 
 }

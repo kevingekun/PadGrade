@@ -25,7 +25,7 @@ public class BatchListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_batch_list);
+        setContentView(R.layout.activity_batch_check);
 
         final List<Map<String, Object>> listems = new ArrayList<>();
         for (int i = 0; i < pcmc.length; i++) {
@@ -39,7 +39,7 @@ public class BatchListActivity extends AppCompatActivity {
                 R.layout.batch_list, new String[] { "pcmc", "exam_address"},
                 new int[] {R.id.pcmc,R.id.exam_address});
 
-        batchlist=(ListView)findViewById(R.id.batchlist);
+        batchlist=(ListView)findViewById(R.id.lv_batch_check);
         batchlist.setAdapter(simplead);
 
         batchlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {

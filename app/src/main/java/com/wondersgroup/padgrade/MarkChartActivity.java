@@ -1,7 +1,9 @@
 package com.wondersgroup.padgrade;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
@@ -23,9 +25,9 @@ public class MarkChartActivity extends AppCompatActivity {
         GridLayout gridLayout = new GridLayout(this);
 
         TextView textView1 = new TextView(this);
-        textView1.setWidth(20);
-        textView1.setHeight(10);
+        textView1.setWidth(200);
         textView1.setText("hello");
+        textView1.setBackgroundColor(Color.RED);
 
         gridLayout.addView(textView1);
 

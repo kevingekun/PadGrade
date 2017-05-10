@@ -43,8 +43,13 @@
         <activity
             android:name=".QuestionActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".MarkChartActivity"
-            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".MarkChartActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".BatchCheckActivity"
+            android:screenOrientation="landscape">
+
+        </activity>
     </application>
 
 </manifest>

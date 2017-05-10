@@ -8,9 +8,14 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ListView;
 
+import com.wondersgroup.adapter.RadioListViewAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 考评员选择考评类别
+ */
 public class CategoryCheckActivity extends AppCompatActivity {
 
     private ListView categoryList;
