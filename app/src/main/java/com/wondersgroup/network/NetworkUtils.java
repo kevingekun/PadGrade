@@ -1,0 +1,373 @@
+package com.wondersgroup.network;
+
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+
+import com.google.gson.Gson;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import cn.abcsale.abcsale_firm.base.BaseActivity;
+import cn.abcsale.abcsale_firm.base.BaseUrls;
+import cn.abcsale.abcsale_firm.base.StringValues;
+import cn.abcsale.abcsale_firm.listeners.ServerCallbackListener;
+import cn.abcsale.abcsale_firm.listeners.ServerCaptchaCallbackListener;
+import cn.abcsale.abcsale_firm.messages.BaseMessage;
+import cn.abcsale.abcsale_firm.messages.GoodsSellingRateAndStockInfoMessage;
+import cn.abcsale.abcsale_firm.ui.LoginActivity;
+import cn.abcsale.abcsale_firm.ui.views.DialogUtils;
+
+/**
+ * 网络工具类
+ * <p>
+ * Created by Xiaopei ZHANG on 2016/11/3 0003.
+ */
+
+public class NetworkUtils {
+
+    /**
+     * 提交信息
+     *
+     * @param url      网络地址
+     * @param json     未加密字符串
+     * @param receiver 接收回调
+     */
+    public static void postData(final Context context, String url,
+                                String json,
+                                final ServerCallbackListener receiver) {
+
+        final AlertDialog dialog = DialogUtils.createLoadingDialog(context);
+
+        if (context instanceof BaseActivity&&!url.equals(BaseUrls.URL_AGENT_AREA_GOOD)){
+            dialog.show();
+        }
+
+        RequestParams params = new RequestParams(url);
+        params.setUseCookie(true);
+
+        try {
+            String encryptJson = DES.encrypt(json.getBytes());
+            params.addBodyParameter("param", encryptJson);
+
+            x.http().post(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    try {
+
+                        if (dialog!=null && dialog.isShowing()){
+                            dialog.dismiss();
+                        }
+
+                        String decryptResult = String.valueOf(new String(DES.decrypt(result.getBytes())));
+                        if(decryptResult.contains("ZX002")){
+//                            ToastUtil.make(context,"登录超时，请重新登录！");
+//                            Intent intent = new Intent(context, LoginActivity.class);
+//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            context.startActivity(intent);
+                            String username = SPUtils.getFromSP(context, StringValues.LOGINNAME);
+                            String password = SPUtils.getFromSP(context, StringValues.PASSWORD);
+
+                            Map<String, String> map = new HashMap<>();
+                            map.put(StringValues.LOGINNAME, username);
+                            map.put(StringValues.PASSWORD, password);
+
+                            NetworkUtils.postData(context, BaseUrls.URL_LOGIN, CommonUtils.createJson(map), new ServerCallbackListener() {
+                                @Override
+                                public void onSuccess(String result) {
+                                    BaseMessage message = new Gson().fromJson(result, BaseMessage.class);
+                                    if (!message.equals(StringValues.TRUE)) {
+                                        ToastUtil.make(context, message.getMsg());
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Throwable ex) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(CancelledException cex) {
+
+                                }
+
+                                @Override
+                                public void onFinished() {
+
+                                }
+                            });
+                        }else{
+                            BaseMessage baseMessage = new Gson().fromJson(decryptResult,BaseMessage.class);
+                            if (baseMessage.getSuccess().equals(StringValues.TRUE)){
+                                receiver.onSuccess(decryptResult);
+                            }else{
+                                ToastUtil.make(context,baseMessage.getMsg());
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    if (dialog!=null && dialog.isShowing()){
+                        dialog.dismiss();
+                    }
+                    receiver.onError(ex);
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+                    if (dialog!=null && dialog.isShowing()){
+                        dialog.dismiss();
+                    }
+                    receiver.onCancelled(cex);
+                }
+
+                @Override
+                public void onFinished() {
+                    if (dialog!=null && dialog.isShowing()){
+                        dialog.dismiss();
+                    }
+                    receiver.onFinished();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getCaptcha(String url,
+                                  final ServerCaptchaCallbackListener receiver) {
+
+        RequestParams params = new RequestParams(url);
+        params.setUseCookie(true);
+
+        try {
+            String encryptJson = DES.encrypt("{}".getBytes());
+            params.addBodyParameter("param", encryptJson);
+
+            x.http().post(params, new Callback.CommonCallback<byte[]>() {
+                @Override
+                public void onSuccess(byte[] result) {
+                    try {
+                        receiver.onSuccess(result);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    receiver.onError(ex);
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+                    receiver.onCancelled(cex);
+                }
+
+                @Override
+                public void onFinished() {
+                    receiver.onFinished();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 上传图片，网络地址已内嵌
+     *
+     * @param filePath 图片文件路径
+     * @param type     上传图片类型，参见开发文档
+     * @param receiver 回调接口
+     */
+    public static void postImage(String filePath, String type, final ServerCallbackListener receiver) {
+        RequestParams params = new RequestParams(BaseUrls.URL_UPLOAD);
+        params.setUseCookie(true);
+        params.setMultipart(true);
+
+        try {
+            Map<String, String> map = new HashMap<>();
+            map.put("type", type);
+
+            String encryptJson = DES.encrypt(CommonUtils.createJson(map).getBytes());
+            params.addBodyParameter("param", encryptJson);
+            params.addBodyParameter("file", new File(filePath));
+
+            x.http().post(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    try {
+                        String decryptResult = String.valueOf(new String(DES.decrypt(result.getBytes())));
+                        receiver.onSuccess(decryptResult);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    receiver.onError(ex);
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+                    receiver.onCancelled(cex);
+                }
+
+                @Override
+                public void onFinished() {
+                    receiver.onFinished();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 提交信息
+     *
+     * @param url      网络地址
+     * @param receiver 接收回调
+     */
+    public static void postData(String url,
+                                final ServerCallbackListener receiver){
+
+        RequestParams params = new RequestParams(url);
+        params.setUseCookie(true);
+
+        try {
+//            String encryptJson = DES.encrypt(json.getBytes());
+//            params.addBodyParameter("param", encryptJson);
+//            params.addBodyParameter("param", json);
+
+            x.http().post(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    try {
+                        String decryptResult = String.valueOf(new String(DES.decrypt(result.getBytes())));
+                        receiver.onSuccess(decryptResult);
+//                        receiver.onSuccess(result);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    receiver.onError(ex);
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+                    receiver.onCancelled(cex);
+                }
+
+                @Override
+                public void onFinished() {
+                    receiver.onFinished();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * 提交文件
+     * 废弃，不适用此项目
+     *
+     * @param url      地址
+     * @param key      键
+     * @param path     文件路径
+     * @param receiver 接收结果后的回调函数
+     */
+    @Deprecated
+    public static void postFile(String url,
+                                String key,
+                                String path,
+                                final ServerCallbackListener receiver) {
+        RequestParams params = new RequestParams(url);
+        params.setUseCookie(true);
+
+        params.addBodyParameter(key, new File(path));
+        params.setMultipart(true);
+
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                receiver.onSuccess(result);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                receiver.onError(ex);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                receiver.onCancelled(cex);
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    /**
+     * 上传文件
+     * 废弃，不适用此项目
+     *
+     * @param url      网络地址
+     * @param key      键
+     * @param file     文件
+     * @param receiver 接收结果后的回调函数
+     */
+    @Deprecated
+    public static void postFile(String url,
+                                String key,
+                                File file,
+                                final ServerCallbackListener receiver) {
+        RequestParams params = new RequestParams(url);
+        params.setUseCookie(true);
+
+        params.addBodyParameter(key, file);
+        params.setMultipart(true);
+
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                receiver.onSuccess(result);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                receiver.onError(ex);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                receiver.onCancelled(cex);
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+}

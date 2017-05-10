@@ -64,7 +64,8 @@ public class CategoryCheckActivity extends AppCompatActivity {
     }
 
     public void categoryConfirm(View view) {
-        Intent intent = new Intent(CategoryCheckActivity.this,StudentListActivity.class);
+       // Intent intent = new Intent(CategoryCheckActivity.this,StudentListActivity.class);
+        Intent intent = new Intent(CategoryCheckActivity.this,PhotographActivity.class);
         startActivity(intent);
     }
 }

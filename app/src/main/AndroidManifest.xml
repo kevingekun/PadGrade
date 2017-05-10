@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.wondersgroup.padgrade">
-
+    <!--联网权限-->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -9,6 +10,11 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!--拍照权限-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera2" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:name=".MyApplication"
@@ -17,7 +23,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:theme">
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
@@ -46,10 +53,13 @@
         <activity
             android:name=".MarkChartActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".BatchCheckActivity"
-            android:screenOrientation="landscape">
-
-        </activity>
+        <activity
+            android:name=".BatchCheckActivity"
+            android:screenOrientation="landscape"></activity>
+        <activity android:name=".PhotographActivity"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name="com.desmond.squarecamera.CameraActivity"></activity>
     </application>
 
 </manifest>

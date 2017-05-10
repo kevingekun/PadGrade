@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wondersgroup.padgrade.PhotographActivity">
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+    <Button
+        android:id="@+id/photograph"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="启动相机"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/image"
+        android:onClick="requestForCameraPermission"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="确定使用"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/photograph"
+        android:onClick="ConfirmPhoto"/>
+</RelativeLayout>
