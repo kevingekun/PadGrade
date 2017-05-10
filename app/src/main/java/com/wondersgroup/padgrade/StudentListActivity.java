@@ -29,6 +29,7 @@ public class StudentListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
+        setTitle(R.string.app_student_list);
         //Toast.makeText(getApplicationContext(),"batchlist",Toast.LENGTH_SHORT).show();
         final List<Map<String, Object>> listems = new ArrayList<>();
         for (int i = 0; i < zkz.length; i++) {

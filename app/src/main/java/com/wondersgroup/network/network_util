@@ -15,7 +15,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.abcsale.abcsale_firm.base.BaseActivity;
+/*import cn.abcsale.abcsale_firm.base.BaseActivity;
 import cn.abcsale.abcsale_firm.base.BaseUrls;
 import cn.abcsale.abcsale_firm.base.StringValues;
 import cn.abcsale.abcsale_firm.listeners.ServerCallbackListener;
@@ -23,7 +23,7 @@ import cn.abcsale.abcsale_firm.listeners.ServerCaptchaCallbackListener;
 import cn.abcsale.abcsale_firm.messages.BaseMessage;
 import cn.abcsale.abcsale_firm.messages.GoodsSellingRateAndStockInfoMessage;
 import cn.abcsale.abcsale_firm.ui.LoginActivity;
-import cn.abcsale.abcsale_firm.ui.views.DialogUtils;
+import cn.abcsale.abcsale_firm.ui.views.DialogUtils;*/
 
 /**
  * 网络工具类

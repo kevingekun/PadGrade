@@ -22,6 +22,7 @@ public class MarkChartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.app_mark);
         GridLayout gridLayout = new GridLayout(this);
 
         TextView textView1 = new TextView(this);

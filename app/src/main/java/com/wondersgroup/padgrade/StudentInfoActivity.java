@@ -19,6 +19,7 @@ public class StudentInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
+        setTitle(R.string.app_student_detail);
     }
     @Event(value = R.id.checkQuestion,type = View.OnClickListener.class)
     private void checkQuestionBtnOnClick(View view){

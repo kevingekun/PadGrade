@@ -1,5 +1,6 @@
 package com.wondersgroup.padgrade;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ import java.util.Map;
 /**
  * 批次选择
  */
-public class BatchCheckActivity extends AppCompatActivity {
+public class BatchCheckActivity extends Activity {
 
     private ListView lv;
     //自定义适配器

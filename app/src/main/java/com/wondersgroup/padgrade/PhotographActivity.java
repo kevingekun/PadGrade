@@ -30,6 +30,7 @@ public class PhotographActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photograph);
+        setTitle(R.string.app_photograph);
 
         Display display = getWindowManager().getDefaultDisplay();
         mSize = new Point();

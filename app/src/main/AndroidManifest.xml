@@ -27,7 +27,7 @@
         tools:replace="android:theme">
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name"
+            android:label="@string/app_login"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,14 +36,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BatchListActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".StudentListActivity"
-            android:screenOrientation="landscape" />
+            android:name=".BatchCheckActivity"
+            android:screenOrientation="landscape"
+            android:label="@string/app_check_batch"/>
+        <!--去除状态栏
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"-->
         <activity
             android:name=".CategoryCheckActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:label="@string/app_check_category"/>
+        <activity android:name=".PhotographActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".StudentListActivity"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".StudentInfoActivity"
             android:screenOrientation="landscape" />
@@ -54,12 +60,7 @@
             android:name=".MarkChartActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".BatchCheckActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity android:name=".PhotographActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name="com.desmond.squarecamera.CameraActivity"></activity>
+            android:name="com.desmond.squarecamera.CameraActivity"/>
     </application>
 
 </manifest>

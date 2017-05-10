@@ -21,6 +21,7 @@ public class QuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
+        setTitle(R.string.app_question);
     }
 
     @Event(value = R.id.markChart,type = View.OnClickListener.class)

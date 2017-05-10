@@ -6,7 +6,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.wondersgroup.padgrade.Test;
 
-import net.sf.json.JSONObject;
 
 import org.xutils.common.Callback;
 import org.xutils.ex.HttpException;
