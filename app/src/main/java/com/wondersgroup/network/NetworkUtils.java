@@ -370,4 +370,22 @@ public class NetworkUtils {
             }
         });
     }
+    /**
+     * 创建json字符串
+     *
+     * @param map 键值对应的map
+     * @return
+     */
+    public static String createJson(Map<String, String> map) {
+        String json = "{";
+
+        for(String key : map.keySet()){
+            json += "\"" + key + "\"" + ":" + "\"" + map.get(key) + "\",";
+        }
+
+        json = json.substring(0, json.length() - 1);
+
+        json += "}";
+        return json;
+    }
 }
